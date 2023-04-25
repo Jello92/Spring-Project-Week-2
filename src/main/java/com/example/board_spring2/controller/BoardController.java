@@ -16,7 +16,7 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
-    @PostMapping("")
+    @PostMapping
     public BoardResponseDto createBoard (@RequestBody BoardRequestDto boardRequestDto, HttpServletRequest request){
         return boardService.createBoard(boardRequestDto, request);
     }
@@ -24,6 +24,10 @@ public class BoardController {
     @GetMapping
     public List<BoardResponseDto> getBoardList(){
         return boardService.getBoardList();
+    }
+    @GetMapping("/{id}")
+    public BoardResponseDto getBoard(@PathVariable Long id){
+        return boardService.getBoard(id);
     }
 
     @PutMapping("/{id}")
@@ -33,7 +37,7 @@ public class BoardController {
 
     @DeleteMapping("/{id}")
     public ResponseDto deleteBoard (@PathVariable Long id, HttpServletRequest request){
-        return boardService.delete(id, request);
+        return boardService.deleteBoard(id, request);
     }
 }
 

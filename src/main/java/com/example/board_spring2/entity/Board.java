@@ -16,7 +16,7 @@ public class Board extends Timestamped {
     private Long id;
 
     @Column
-    private Long userid;
+    private Long userId;
 
     @Column
     private String title;
@@ -27,16 +27,15 @@ public class Board extends Timestamped {
     @Column
     private String username;
 
-    public Board(BoardRequestDto boardRequestDto, Long id, String username){
+    public Board(BoardRequestDto boardRequestDto, Long userId, String username){
         this.title = boardRequestDto.getTitle();
         this.content = boardRequestDto.getContent();
-        this.username = boardRequestDto.getUsername();
+        this.userId = userId;
+        this.username = username;
     }
 
     public void update(BoardRequestDto boardRequestDto){
         this.content = boardRequestDto.getContent();
         this.title = boardRequestDto.getTitle();
-        this.username = boardRequestDto.getUsername();
     }
-
 }

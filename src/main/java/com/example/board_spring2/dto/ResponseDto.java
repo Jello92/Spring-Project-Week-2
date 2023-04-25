@@ -1,15 +1,15 @@
 package com.example.board_spring2.dto;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class ResponseDto {
 
     private String message;
-    private Object data;
+    private int statusCode;
 
-    public ResponseDto(String message, Object data){
+    public ResponseDto(String message, int statusCode){
         this.message = message;
-        this.data = data;
+        this.statusCode = statusCode;
     }
 }

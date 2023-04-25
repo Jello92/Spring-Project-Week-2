@@ -8,7 +8,6 @@ import com.example.board_spring2.jwt.JwtUtil;
 import com.example.board_spring2.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,6 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
-    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final JwtUtil jwtUtil;
 
     @Transactional
@@ -37,14 +35,14 @@ public class UserService {
 
         Optional<User> found = userRepository.findByUsername(username);
         if (found.isPresent()){
-            return new ResponseDto("같은 아이디가 있습니다!", 100);
+            return new ResponseDto("같은 아이디가 이미 있습니다!", 100);
         }
 
         User user = new User(username, password);
         userRepository.save(user);
 
         ResponseDto responseDto = new ResponseDto("회원가입 성공", 200);
-        return new ResponseDto("회원가입 성공", HttpStatus.OK);
+        return new ResponseDto("회원가입 성공", 200);
     }
 
     @Transactional(readOnly = true)
@@ -58,8 +56,8 @@ public class UserService {
         if(!user.getPassword().equals(password)){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(),user.getPassword()));
-        ResponseDto responseDto = new ResponseDto("로그인 성공", 200);
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
+
         return new ResponseDto("로그인 성공", 200);
     }
 }
